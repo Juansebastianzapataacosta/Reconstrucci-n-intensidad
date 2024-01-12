@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import re
 
 def read_and_calculate_average(file_path):
     data = np.loadtxt(file_path, delimiter=',')
@@ -25,9 +26,10 @@ def main():
 
     # Etiquetas para el eje x
     etiquetas = [os.path.splitext(os.path.basename(file))[0] for file in files]
+    etiquetas_numeros = [int(re.search(r'\d+', tag).group()) for tag in etiquetas if re.search(r'\d+', tag)]
 
     # Se grafican los valores promedio de intensidad en funcion del tiempo
-    plt.plot(etiquetas, intensidad_promedio, 'o-')
+    plt.plot(etiquetas_numeros, intensidad_promedio, 'o-')
     plt.xlabel('Tiempos')
     plt.ylabel('Intensidad promedio')
     plt.title('Intensidad promedio de Bacteria')
